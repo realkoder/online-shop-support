@@ -1,4 +1,4 @@
-# Implementing Support Application for an Online Shop 🛍️
+# Support Application for an Online Shop 🛍️
 
 Although I'm not **yet** fluent in _Ruby & Ruby on Rails_, I enjoy a good challenge. That’s why I’m excited to take on this task using _Ruby on Rails_ as a full stack framework. This document will serve as a record of my process and maybe you’ll find it interesting too. 📚
 
@@ -79,7 +79,7 @@ bin/rails generate model Client fullname:string email:string phone:string image_
 **_Product_ model:**
 
 - `name` (string): Name of product.
-- `category` (enum): e.g., electronics, clothing, books, home, other.
+- `category` (enum): Keeping it simple, if it was correct is should be _has_many_ e.g., electronics, clothing, books, home, other.
 - `description` (string): Detailed description of product.
 - `image_url` (string): Link to a product image.
 - `price` (float): Cost of product.
@@ -227,3 +227,12 @@ store-support(dev)> OrderItem.column_names
 
 #### Seeding DB 🌾
 
+By seeding the DB we have some mocked data for the dev env to play with, the seed logic is always tearing down all tables and id sequences to start from a fresh when executed.
+
+[Check out the seed here](./store-support/db/seeds.rb)
+
+Run the seed:
+
+```bash
+bin/rails db:seed
+```
