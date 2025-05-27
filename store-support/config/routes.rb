@@ -15,12 +15,15 @@ Rails.application.routes.draw do
 
   # ==============================================================================
 
+  namespace :api do
+    namespace :v1 do
+      # Could have added this if we wanted to rely on #index as returning a view
+      # get 'products/all', to: 'products#all'
+      resources :products
   
-  # Could have added this if we wanted to rely on #index as returning a view
-  # get 'products/all', to: 'products#all'
-  resources :products
-  
-  # Could have added this if we wanted to rely on #index as returning a view 
-  # get 'orders/all', to: 'orders#all'
-  resources :orders
+      # Could have added this if we wanted to rely on #index as returning a view 
+      # get 'orders/all', to: 'orders#all'
+      resources :orders
+    end
+  end
 end
