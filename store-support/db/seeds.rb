@@ -10,18 +10,6 @@
 
 # ========================================================================
 
-# RESET TO A FRESH BEGINNING
-OrderItem.destroy_all
-Order.destroy_all
-Client.destroy_all
-Product.destroy_all
-
-# Reset primary key sequences (for PostgreSQL, SQLite, MySQL)
-tables = %w[order_items orders clients products]
-tables.each do |table|
-  ActiveRecord::Base.connection.execute("DELETE FROM sqlite_sequence WHERE name='#{table}'")
-end
-
 # ===========
 # clients
 # ===========

@@ -1,41 +1,53 @@
 class Api::V1::ProductsController < ApplicationController
+  # GET /products
   def index
     products = Product.all
     render json: { data: products }
   end
 
+  # GET /products/:id
   def show
     product = Product.find(params[:id])
     render json: { data: product }
   rescue
-    render json: {data: nil }
+    render json: { data: nil }
   end
 
-  def new
-    product = Product.new
-    render json: { data: product }
-  end
-
+  # POST /products
   def create
-    @product = Product.new(product_params)
-    if @product.save
-      redirect_to product
+    product = Product.new(product_params)
+    if product.save
+      render json: { data: product }, status: 200
     else
-      render :new, status: :unprocessable_entity
+      render json: { error: "Unable to create Product." }, status: 400
     end
   end
 
-  def edit
-    @product = Product.find(params[:id])
-  end
-
+  # PUT /products/:id
   def update
-    @product = Product.find(params[:id])
-    if @product.update(product_params)
-      redirect_to @product
+    product = Product.find(params[:id])
+    if product
+      product.update(product_params)
+      render json: { data: product }, status: 200
     else
-      render :edit, status: :unprocessable_entity
+      render json: { error: "Unable to update Product." }, status: 400
     end
   end
 
+  # DELETE /products/:id
+  def destroy
+    product = Product.find(params[:id])
+    if product
+      product.destroy
+      render json: { message: "Product with id: #{product.id} deleted." }, status: 200
+    else
+      render json: { error: "Unable to delete Product with id: #{product.id}." }, status: 400
+    end
+  end
+
+  private
+
+  def product_params
+    params.require(:product).permit(:name, :category, :description, :image_url, :price, :stock, :active)
+  end
 end

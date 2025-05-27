@@ -43,7 +43,6 @@ I'm using _Cursor_ as _IDE_ and for the _Ruby on Rails_ project I'm using _Ruby 
 rails new store-support --api
 ```
 
-
 - This project is using `Rails 8.0.2`
 - The _Rails project_ is now generated and ready to build upon. Enter the `store-support` directory. **Ensure to always use `bin/rails` when running Rails CLI commands to ensure compatibility.**
 - Start the server `bin/rails server`
@@ -242,6 +241,9 @@ Run the seed:
 
 ```bash
 bin/rails db:seed
+
+# To reset db -> drops DB, creates a new empty database, run migrations, run seeds
+bin/rails db:reset
 ```
 
 ## Routing
@@ -253,8 +255,17 @@ The REST API will expose _CRUD endpoints_ for the following two controllers: `st
 The controllers are referenced in `store-support/config/routes.rb` to ensure proper routing when server is requested.
 
 ```ruby
-  resources :products
-  resources :orders
+  namespace :api do
+    namespace :v1 do
+      # Could have added this if we wanted to rely on #index as returning a view
+      # get 'products/all', to: 'products#all'
+      resources :products
+
+      # Could have added this if we wanted to rely on #index as returning a view
+      # get 'orders/all', to: 'orders#all'
+      resources :orders
+    end
+  end
 ```
 
 _Rails_ provides a shortcut for defining _CRUD endpoints_: `ressources` instead of manually defining all these endpoints:
