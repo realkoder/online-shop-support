@@ -36,7 +36,14 @@ I'm using _Cursor_ as _IDE_ and for the _Ruby on Rails_ project I'm using _Ruby 
 
 **Create a new Rails project**
 
-- Ensure that `rails` is added as _gem_ (check by runing `rails -v`): `rails new store-support`
+- Ensure that `rails` is added as _gem_ (check by runing `rails -v`):
+
+```bash
+# Using api flag since building REST API and not a full stack application
+rails new store-support --api
+```
+
+
 - This project is using `Rails 8.0.2`
 - The _Rails project_ is now generated and ready to build upon. Enter the `store-support` directory. **Ensure to always use `bin/rails` when running Rails CLI commands to ensure compatibility.**
 - Start the server `bin/rails server`
@@ -235,4 +242,36 @@ Run the seed:
 
 ```bash
 bin/rails db:seed
+```
+
+## Routing
+
+It's important that `orders` and `products` can be requested by the REST API based application.
+
+The REST API will expose _CRUD endpoints_ for the following two controllers: `store-support/app/controllers/products` & `store-support/app/controllers/products`
+
+The controllers are referenced in `store-support/config/routes.rb` to ensure proper routing when server is requested.
+
+```ruby
+  resources :products
+  resources :orders
+```
+
+_Rails_ provides a shortcut for defining _CRUD endpoints_: `ressources` instead of manually defining all these endpoints:
+
+- `GET` /products → products#index (list all products)
+- `GET` /products/new → products#new (form for a new product)
+- `POST` /products → products#create (create a new product)
+- `GET` /products/:id → products#show (show a specific product)
+- `GET` /products/:id/edit → products#edit (form to edit a product)
+- `PATCH` /products/:id → products#update (update a product)
+- `PUT` /products/:id → products#update (update a product)
+- `DELETE` /products/:id → products#destroy (delete a product)
+
+Setting up the _controllers_ which also gonna generate _views_ folder, :
+
+```bash
+# The flag provided is skipping the config of routes since they already are defined
+bin/rails generate controller Products index --skip-routes
+bin/rails generate controller Orders index --skip-routes
 ```
