@@ -246,7 +246,7 @@ bin/rails db:seed
 bin/rails db:reset
 ```
 
-## Routing
+## Routing 🚏
 
 It's important that `orders` and `products` can be requested by the REST API based application.
 
@@ -286,3 +286,13 @@ Setting up the _controllers_ which also gonna generate _views_ folder, :
 bin/rails generate controller Products index --skip-routes
 bin/rails generate controller Orders index --skip-routes
 ```
+
+---
+
+<br>
+
+## Sources
+
+[Creating a REST API wiht Rails](https://medium.com/@oliver.seq/creating-a-rest-api-with-rails-2a07f548e5dc)
+
+[Validation of models with Rails](https://dev.to/daviducolo/rails-model-validation-a-comprehensive-guide-with-code-examples-21mh)
