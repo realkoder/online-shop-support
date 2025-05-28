@@ -305,7 +305,7 @@ bin/rails generate controller Orders index --skip-routes
 
 <br>
 
-## Adding OPENAPI / SWAGGR docs
+## Adding OPENAPI / SWAGGR docs 📑
 
 [Generating an OpenAPI/Swagger spec from a Ruby on Rails API](https://www.doctave.com/blog/generate-openapi-swagger-spec-from-ruby-on-rails)
 
@@ -344,6 +344,10 @@ bin/rails generate rspec:swagger Api::Products
 # Generate the Swagger docs defined by specs in ./store-support/spec/*
 bin/rails rswag:specs:swaggerize
 ```
+
+[Checkout the spec folder for configuring and enabling the docs](./store-support/spec)
+
+Start the _Rails_ server and checkout the docs -> http://localhost:3000/api-docs/index.html
 
 ---
 
