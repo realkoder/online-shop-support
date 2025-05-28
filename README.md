@@ -313,6 +313,8 @@ bin/rails generate controller Orders index --skip-routes
 
 [Service objects Ruby on Rails](https://medium.com/nyc-ruby-on-rails/design-patterns-in-ruby-on-rails-service-objects-a90bf9178689)
 
+[Service objects on Rails - inherits ApplicationService](https://medium.com/@thilorusche/service-objects-for-rails-9c5973dc8bc2)
+
 ---
 
 **Instance variables** where interesting -> decided to not use them within _controllers_ since _ERB_ was not used for this API based application.
