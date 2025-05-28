@@ -310,3 +310,13 @@ bin/rails generate controller Orders index --skip-routes
 [Creating a REST API wiht Rails](https://medium.com/@oliver.seq/creating-a-rest-api-with-rails-2a07f548e5dc)
 
 [Validation of models with Rails](https://dev.to/daviducolo/rails-model-validation-a-comprehensive-guide-with-code-examples-21mh)
+
+[Service objects Ruby on Rails](https://medium.com/nyc-ruby-on-rails/design-patterns-in-ruby-on-rails-service-objects-a90bf9178689)
+
+---
+
+**Instance variables** where interesting -> decided to not use them within _controllers_ since _ERB_ was not used for this API based application.
+
+[Instance variables in Ruby - geeksforgeeks](https://www.geeksforgeeks.org/instance-variables-in-ruby/)
+
+[Instance variables in Ruby - ruby-doc](https://ruby-doc.org/docs/ruby-doc-bundle/UsersGuide/rg/instancevars.html)
