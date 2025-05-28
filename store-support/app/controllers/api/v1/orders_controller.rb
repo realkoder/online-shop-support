@@ -15,54 +15,16 @@ class Api::V1::OrdersController < ApplicationController
 
   # POST /orders
   def create
-    # Transactional so DB manipulations gets rolled back if failues
-    ActiveRecord::Base.transaction do
-      # IMPORTANT check if product stock amount is acceptable for incoming order
-      order_items_params = order_params[:order_items] || []
+    order_creation_service = OrderCreationService.new(order_params)
+    order_creation_service.create
 
-      order = Order.create(client_id: order_params[:client_id], status: "pending", total_price: 0)
-      Rails.logger.info("LOOK ORDERID: #{order.id}")
+    Rails.logger.info("LOOK result")
+    Rails.logger.info(order_creation_service.error)
 
-      # Need the products for price and stock
-      product_ids = order_items_params.map { |item| item[:product_id] }
-      products = Product.where(id: product_ids).index_by(&:id)
-
-      order_items = []
-      order_total_price = 0
-
-      order_items_params.each do |item|
-        product = products[item[:product_id].to_i]
-        quantity = item[:quantity].to_i
-        Rails.logger.info("LOOK #{product.stock}")
-
-        if product.nil?
-          render json: { error: "Product with id #{item[:product_id]} not found" }, status: 400
-          raise ActiveRecord::Rollback
-        end
-
-        if product.stock < quantity
-          render json: { error: "Not enough stock for product #{product.name}" }, status: 400
-          raise ActiveRecord::Rollback
-        end
-
-        product.stock -= quantity
-        product.save! # ! will raise an error if saving fails - then DB is rolled back
-
-        order_item = OrderItem.create(order_id: order.id, product_id: product.id, quantity: quantity, price: product.price)
-        # Associates order_items with order and gets persisted when order.save executes
-        order_items << order_item
-
-        order_total_price += product.price * quantity
-      end
-
-      order.total_price = order_total_price
-
-      if order.save
-        render json: { data: order.as_json(include: :order_items) }, status: 200
-      else
-        render json: { error: "Unable to create Order." }, status: 400
-        raise ActiveRecord::Rollback
-      end
+    if order_creation_service.error.nil?
+      render json: { data: order_creation_service.order.as_json(include: :order_items) }, status: :ok
+    else
+      render json: { error: order_creation_service.error }, status: :bad_request
     end
   end
 
