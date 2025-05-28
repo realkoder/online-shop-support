@@ -27,11 +27,14 @@ class Api::V1::ProductsController < ApplicationController
   def update
     product = Product.find(params[:id])
     if product
-      product.update(product_params)
+      # Bang version ensures that validations gets triggered and throws if not valid
+      product.update!(product_params)
       render json: { data: product }, status: 200
     else
       render json: { error: "Unable to update Product." }, status: 400
     end
+    rescue => e
+      render json: { error: "Error => #{e}" }
   end
 
   # DELETE /products/:id

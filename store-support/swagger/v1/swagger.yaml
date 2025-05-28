@@ -1,0 +1,286 @@
+---
+openapi: 3.0.1
+info:
+  title: Simple Order and Product Supporti for E-Shop API V1
+  version: v1
+paths:
+  "/orders":
+    get:
+      summary: Retrieves a list of all orders
+      responses:
+        '200':
+          description: orders found
+    post:
+      summary: Creates a new order
+      parameters: []
+      responses:
+        '200':
+          description: order created
+        '400':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: integer
+                order_items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      product_id:
+                        type: integer
+                      quantity:
+                        type: integer
+                    required:
+                    - product_id
+                    - quantity
+              required:
+              - client_id
+              - order_items
+        required: true
+  "/orders/{id}":
+    get:
+      summary: Retrieves a specific order
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: order found
+        '404':
+          description: order not found
+    put:
+      summary: Updates an existing order
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: order updated
+        '400':
+          description: unable to update order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: integer
+                order_items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      product_id:
+                        type: integer
+                      quantity:
+                        type: integer
+              required:
+              - client_id
+              - order_items
+        required: true
+    delete:
+      summary: Deletes an order
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: order deleted
+        '400':
+          description: unable to delete order
+  "/products":
+    get:
+      summary: Retrieves a list of all products
+      responses:
+        '200':
+          description: products found
+    post:
+      summary: Creates a new product
+      parameters: []
+      responses:
+        '200':
+          description: product created
+        '400':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Tablet v.2.0
+                category:
+                  type: string
+                  example: electronics
+                description:
+                  type: string
+                  example: Just a tablet
+                image_url:
+                  type: string
+                  example: https://images.pexels.com/photos/221185/pexels-photo-221185.jpeg
+                price:
+                  type: float
+                  example: 99.9
+                stock:
+                  type: integer
+                  example: 5
+                active:
+                  type: boolean
+                  example: true
+        required: true
+  "/products/{id}":
+    get:
+      summary: Retrieves a specific product
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: product found
+        '404':
+          description: product not found
+    put:
+      summary: Updates an existing product
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: product updated
+        '400':
+          description: unable to update product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Tablet v.2.0
+                category:
+                  type: string
+                  example: electronics
+                description:
+                  type: string
+                  example: Just a tablet
+                image_url:
+                  type: string
+                  example: https://images.pexels.com/photos/221185/pexels-photo-221185.jpeg
+                price:
+                  type: float
+                  example: 99.9
+                stock:
+                  type: integer
+                  example: 5
+                active:
+                  type: boolean
+                  example: true
+        required: true
+    delete:
+      summary: Deletes a product
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: product deleted
+        '400':
+          description: unable to delete product
+components:
+  schemas:
+    not_found:
+      type: object
+      properties:
+        error:
+          type: string
+    order:
+      type: object
+      required:
+      - client_id
+      - total_price
+      - total_items
+      - status
+      properties:
+        client_id:
+          type: integer
+          example: 1
+        total_price:
+          type: decimal
+          example: 119.99
+          description: Total price of the order
+        total_items:
+          type: integer
+          example: 2
+          description: Total number of items in the order
+        status:
+          type: string
+          example: pending
+          enum:
+          - pending
+          - paid
+          - shipped
+          - cancelled
+          - completed
+    product:
+      type: object
+      required:
+      - name
+      - category
+      - description
+      - price
+      - stock
+      properties:
+        name:
+          type: string
+          example: Espresso
+        category:
+          type: string
+          example: beverages
+        description:
+          type: string
+          example: A hot beverage made by forcing pressurized water through finely-ground
+            coffee.
+        price:
+          type: decimal
+          example: 1.99
+          description: Price of the product
+        stock:
+          type: integer
+          example: 50
+          description: Available stock of the product
+        active:
+          type: boolean
+          example: true
+          description: Indicates if the product is active and available for sale
+servers:
+- url: http://localhost:3000/api/v1
+  variables:
+    defaultHost:
+      default: http://localhost:3000/api/v1

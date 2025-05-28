@@ -305,6 +305,50 @@ bin/rails generate controller Orders index --skip-routes
 
 <br>
 
+## Adding OPENAPI / SWAGGR docs
+
+[Generating an OpenAPI/Swagger spec from a Ruby on Rails API](https://www.doctave.com/blog/generate-openapi-swagger-spec-from-ruby-on-rails)
+
+Add the following _gems_ to projects `Gemfile`:
+
+```ruby
+# OPENAPI / SWAGGER
+gem "rswag-api"
+gem "rswag-ui"
+
+group :development, :test do
+  gem "rspec-rails"   # Note that we also need rspec-rails
+  gem "rswag-specs"
+end
+```
+
+Install the added _gems_ and run the installers for `rswag` and `rspec-rails`:
+
+```bash
+# Install gems
+bin/bundle install
+
+# Run installers
+# rspec-rails
+bin/rails generate rspec:install
+
+# rswag
+bin/rails g rswag:api:install && ./bin/rails g rswag:ui:install && RAILS_ENV=test ./bin/rails g rswag:specs:install
+
+# Create specs to describe Api one for each controller
+# ORDERS
+bin/rails generate rspec:swagger Api::Orders
+# PRODUCTS
+bin/rails generate rspec:swagger Api::Products
+
+# Generate the Swagger docs defined by specs in ./store-support/spec/*
+bin/rails rswag:specs:swaggerize
+```
+
+---
+
+<br>
+
 ## Sources
 
 [Creating a REST API wiht Rails](https://medium.com/@oliver.seq/creating-a-rest-api-with-rails-2a07f548e5dc)
