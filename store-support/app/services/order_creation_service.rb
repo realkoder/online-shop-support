@@ -22,10 +22,12 @@ class OrderCreationService
   private
 
   def create_order
+    total_items = @order_items.sum { |item| item[:quantity] }
     @order = Order.create!(
       client_id: @client_id,
       status: "pending",
-      total_price: 0
+      total_price: 0,
+      total_items: total_items
     )
   end
 
@@ -74,6 +76,7 @@ class OrderCreationService
   end
 
   def set_error(message)
+    Rails.logger.info("Error raised => #{message}")
     # Conditionally assign - if message is falsy error will be set - ensuring @error is set only once
     @error ||= message
   end

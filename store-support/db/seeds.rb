@@ -103,18 +103,21 @@ orders = [
   {
     client: clientAlice,
     status: "pending",
-    total_price: 119.98
+    total_price: 119.98,
+    total_items: 2
   },
   {
     client: clientBob,
     status: "completed",
-    total_price: 149.99
+    total_price: 149.99,
+    total_items: 1
   }
 ]
 
 order_records = orders.map do |attrs|
   Order.find_or_create_by!(client: attrs[:client], status: attrs[:status]) do |order|
     order.total_price = attrs[:total_price]
+    order.total_items = attrs[:total_items]
   end
 end
 

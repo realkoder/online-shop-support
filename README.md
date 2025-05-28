@@ -231,6 +231,20 @@ store-support(dev)> OrderItem.column_names
 
 ---
 
+### Migrations: Adding new fields
+
+Forgot to add `totalItems` for _orders_ - which can be done with another migration.
+
+```bash
+# Generate the migration
+bin/rails generate migration AddTotalItemsToOrders total_items:integer
+
+# Execute the new migration
+bin/rails db:migrate
+```
+
+---
+
 #### Seeding DB 🌾
 
 By seeding the DB we have some mocked data for the dev env to play with, the seed logic is always tearing down all tables and id sequences to start from a fresh when executed.

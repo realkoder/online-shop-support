@@ -2,7 +2,7 @@ class Api::V1::OrdersController < ApplicationController
   # GET /orders
   def index
     orders = Order.all
-    render json: { data: orders }
+    render json: { data: orders.as_json(include: :order_items) }
   end
 
   # GET /orders/:id
@@ -17,9 +17,6 @@ class Api::V1::OrdersController < ApplicationController
   def create
     order_creation_service = OrderCreationService.new(order_params)
     order_creation_service.create
-
-    Rails.logger.info("LOOK result")
-    Rails.logger.info(order_creation_service.error)
 
     if order_creation_service.error.nil?
       render json: { data: order_creation_service.order.as_json(include: :order_items) }, status: :ok
@@ -48,6 +45,8 @@ class Api::V1::OrdersController < ApplicationController
     else
       render json: { error: "Unable to delete Order with id: #{order.id}." }, status: 400
     end
+    rescue => e
+      render json: { error: "Error => #{e}" }
   end
 
   private
