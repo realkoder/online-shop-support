@@ -15,6 +15,8 @@ class Api::V1::OrdersController < ApplicationController
 
   # POST /orders
   def create
+    puts "LOOK: #{order_params[:client_id]}"
+    puts "LOOK: #{order_params[:order_items]}"
     order_creation_service = OrderCreationService.new(order_params)
     order_creation_service.create
 
@@ -45,8 +47,8 @@ class Api::V1::OrdersController < ApplicationController
     else
       render json: { error: "Unable to delete Order with id: #{order.id}." }, status: 400
     end
-    rescue => e
-      render json: { error: "Error => #{e}" }
+  rescue => e
+    render json: { error: "Error => #{e}" }
   end
 
   private

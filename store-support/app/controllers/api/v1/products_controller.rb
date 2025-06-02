@@ -33,8 +33,8 @@ class Api::V1::ProductsController < ApplicationController
     else
       render json: { error: "Unable to update Product." }, status: 400
     end
-    rescue => e
-      render json: { error: "Error => #{e}" }
+  rescue => e
+    render json: { error: "Error => #{e}" }
   end
 
   # DELETE /products/:id

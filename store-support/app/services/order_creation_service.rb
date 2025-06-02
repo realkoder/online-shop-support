@@ -15,8 +15,8 @@ class OrderCreationService
       update_order_total
     end
 
-    rescue => e
-      set_error(e.message)
+  rescue => e
+    set_error(e.message)
   end
 
   private

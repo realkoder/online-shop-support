@@ -19,7 +19,7 @@ RSpec.configure do |config|
     'v1/swagger.yaml' => {
       openapi: '3.0.1',
       info: {
-        title: 'Simple Order and Product Supporti for E-Shop API V1',
+        title: 'Simple Order and Product Support for E-Shop API V1',
         version: 'v1'
       },
       paths: {},

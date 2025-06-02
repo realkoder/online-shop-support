@@ -1,7 +1,7 @@
 ---
 openapi: 3.0.1
 info:
-  title: Simple Order and Product Supporti for E-Shop API V1
+  title: Simple Order and Product Support for E-Shop API V1
   version: v1
 paths:
   "/orders":
@@ -24,23 +24,28 @@ paths:
             schema:
               type: object
               properties:
-                client_id:
-                  type: integer
-                order_items:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      product_id:
-                        type: integer
-                      quantity:
-                        type: integer
-                    required:
-                    - product_id
-                    - quantity
+                order:
+                  type: object
+                  properties:
+                    client_id:
+                      type: integer
+                    order_items:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          product_id:
+                            type: integer
+                          quantity:
+                            type: integer
+                        required:
+                        - product_id
+                        - quantity
+                  required:
+                  - client_id
+                  - order_items
               required:
-              - client_id
-              - order_items
+              - order
         required: true
   "/orders/{id}":
     get:

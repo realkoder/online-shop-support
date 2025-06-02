@@ -13,20 +13,26 @@ RSpec.describe '/api/v1/orders', type: :request do
       parameter name: :order, in: :body, required: true, schema: {
         type: :object,
         properties: {
-          client_id: { type: :integer },
-          order_items: {
-            type: :array,
-            items: {
-              type: :object,
-              properties: {
-                product_id: { type: :integer },
-                quantity: { type: :integer }
-              },
-              required: %w[product_id quantity]
-            }
+          order: {
+            type: :object,
+            properties: {
+              client_id: { type: :integer },
+              order_items: {
+                type: :array,
+                items: {
+                  type: :object,
+                  properties: {
+                    product_id: { type: :integer },
+                    quantity: { type: :integer }
+                  },
+                  required: %w[product_id quantity]
+                }
+              }
+            },
+            required: %w[client_id order_items]
           }
         },
-        required: %w[client_id order_items]
+        required: [ 'order' ]
       }
 
       response '200', 'order created' do

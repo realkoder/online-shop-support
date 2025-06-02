@@ -21,6 +21,9 @@ gem "jbuilder"
 gem "rswag-api"
 gem "rswag-ui"
 
+# DEBUGGING
+gem "pry-byebug"
+
 group :development, :test do
   gem "rspec-rails"   # Note that we also need rspec-rails
   gem "rswag-specs"
