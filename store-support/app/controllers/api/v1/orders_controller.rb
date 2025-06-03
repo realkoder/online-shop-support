@@ -15,8 +15,6 @@ class Api::V1::OrdersController < ApplicationController
 
   # POST /orders
   def create
-    puts "LOOK: #{order_params[:client_id]}"
-    puts "LOOK: #{order_params[:order_items]}"
     order_creation_service = OrderCreationService.new(order_params)
     order_creation_service.create
 
